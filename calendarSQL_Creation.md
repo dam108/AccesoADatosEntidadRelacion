@@ -9,6 +9,8 @@ CREATE SCHEMA calendar;
 
 CREATE TABLE IF NOT EXISTS calendar.comparte
 (
+-- ESTE USUARIO ES EL QUE VA A RECIVIR LA COMPARTICION DE LA TABLA
+-- HACER UN CHECK ENTRE TABLAS PARA COMPROBAR QUE NO SE COMPARTE UN CALENDARIO CON SIGO MISMO
 dni_usuario VARCHAR(10),
 calendario INTEGER,
 PRIMARY KEY (dni_usuario, calendario)
@@ -23,6 +25,7 @@ fecha_creacion TIMESTAMP NOT NULL
 
 CREATE TABLE IF NOT EXISTS calendar.guardarcontacto
 (
+-- HACER UN CHECK PARA COMPROBAR QUE UN USUARIO NO SE GUARDA A SI MISMO DE CONTACTO
 DNI_contacto VARCHAR(10),
 DNI_usuario VARCHAR(10),
 PRIMARY KEY (dni_contacto, dni_usuario)
@@ -32,12 +35,12 @@ CREATE TABLE IF NOT EXISTS calendar.usuarios
 (
 DNi_usuario  VARCHAR(10) PRIMARY KEY,
 nombre_completo VARCHAR(30) NOT NULL,
-email email UNIQUE,
+email email UNIQUE NOT NULL,
 contraseña CHAR(64) UNIQUE NOT NULL,
-direccion VARCHAR(50),
-poblacion VARCHAR(20),
+direccion VARCHAR(50) NOT NULL,
+poblacion VARCHAR(20)NOT NULL,
 portal VARCHAR(5),
-codigo_postal INTEGER,
+codigo_postal INTEGER NOT NULL,
 fecha_nacimiento DATE NOT NULL
 );
 
@@ -54,9 +57,9 @@ CREATE TABLE IF NOT EXISTS calendar.recordatorio
 evento INTEGER,
 fecha DATE,
 calendario INTEGER,
-titulo VARCHAR(30),
+titulo VARCHAR(30) NOT NULL,
 descripcion VARCHAR(300),
-hora_alarma TIME,
+hora_alarma TIME NOT NULL,
 PRIMARY KEY (evento, fecha)
 );
 
@@ -65,7 +68,7 @@ CREATE TABLE IF NOT EXISTS calendar.tareas
 evento INTEGER,
 fecha DATE,
 calendario INTEGER,
-titulo VARCHAR(30),
+titulo VARCHAR(30) NOT NULL,
 descripcion VARCHAR(300),
 hora_inicio TIME,
 PRIMARY KEY (evento, fecha)
@@ -76,8 +79,8 @@ CREATE TABLE IF NOT EXISTS calendar.festivos
 evento INTEGER,
 fecha DATE,
 calendario INTEGER,
-festividad VARCHAR(40),
-ambito VARCHAR(20),
+festividad VARCHAR(40) NOT NULL,
+ambito VARCHAR(20) NOT NULL,
 PRIMARY KEY (evento, fecha)
 );
 
@@ -95,7 +98,7 @@ CREATE TABLE IF NOT EXISTS calendar.eventogenerico
 evento INTEGER,
 fecha DATE,
 calendario INTEGER,
-titulo VARCHAR(30),
+titulo VARCHAR(30) NOT NULL,
 descripcion VARCHAR(300),
 localizacion VARCHAR(40),
 PRIMARY KEY (evento, fecha)
