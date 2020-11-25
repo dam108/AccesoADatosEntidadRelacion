@@ -1,6 +1,10 @@
 ~~~ sql
 CREATE DATABASE ejercicio_calendar OWNER = alumno ;
 
+CREATE EXTENSION citext;
+CREATE DOMAIN email AS citext
+  CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
+
 CREATE SCHEMA calendar;
 
 CREATE TABLE IF NOT EXISTS calendar.comparte
@@ -28,8 +32,8 @@ CREATE TABLE IF NOT EXISTS calendar.usuarios
 (
 DNi_usuario  VARCHAR(10) PRIMARY KEY,
 nombre_completo VARCHAR(30) NOT NULL,
-email VARCHAR(40) UNIQUE,
-contraseña VARCHAR(20) UNIQUE NOT NULL,
+email email UNIQUE,
+contraseña CHAR(64) UNIQUE NOT NULL,
 direccion VARCHAR(50),
 poblacion VARCHAR(20),
 portal VARCHAR(5),
