@@ -25,9 +25,9 @@ fecha_creacion TIMESTAMP NOT NULL
 
 CREATE TABLE IF NOT EXISTS calendar.guardarcontacto
 (
--- HACER UN CHECK PARA COMPROBAR QUE UN USUARIO NO SE GUARDA A SI MISMO DE CONTACTO
 DNI_contacto VARCHAR(10),
 DNI_usuario VARCHAR(10),
+CHECK(DNI_usuario != DNI_contacto),
 PRIMARY KEY (dni_contacto, dni_usuario)
 );
 
@@ -119,6 +119,8 @@ titulo VARCHAR(30) NOT NULL,
 color CHAR(7) NOT NULL
 );
 
+ALTER TABLE calendar.calendarios ALTER COLUMN fecha_creacion SET DEFAULT now();
+
 ALTER TABLE calendar.comparte ADD CONSTRAINT clave_ajena1_comparte
 FOREIGN KEY (dni_usuario) REFERENCES calendar.usuarios (dni_usuario)
 ON DELETE CASCADE ON UPDATE CASCADE;
@@ -195,8 +197,6 @@ ALTER TABLE calendar.seetiquetacon ADD CONSTRAINT clave_ajena2_seetiquetacon
 FOREIGN KEY (evento, fecha) REFERENCES calendar.eventogenerico (evento, fecha)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
--- ALTER TABLE calendar.calendarios ALTER COLUMN fecha_creacion SET DEFAULT now();
-
 -- INSERT INTO calendar.usuarios
 -- VALUES
 -- ('79336700V', 'Jose Angel Doval Fraga',
@@ -204,9 +204,20 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 -- 'betanzos', null, 15300, '1985-12-07')
 -- ;
 
+-- INSERT INTO calendar.usuarios
+-- VALUES
+-- ('11111111A', 'Daniel Di Pascua',
+-- 'daniel@DiPascua.com', 'abc123.', 'Calle de prueba 123',
+-- 'sada', '1A', 15300, '1988-04-11')
+-- ;
+
 -- INSERT INTO calendar.calendarios
 -- VALUES
 -- (DEFAULT, '79336700V', DEFAULT)
 -- ;
+
+-- INSERT INTO calendar.guardarcontacto
+-- VALUES
+-- ('79336700V', '11111111A');
 
 ~~~ 
