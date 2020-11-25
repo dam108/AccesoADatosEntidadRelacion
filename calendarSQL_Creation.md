@@ -1,10 +1,12 @@
 ~~~ sql
 CREATE DATABASE calendar OWNER = alumno ;
 
+CREATE SCHEMA calendar;
+
 CREATE TABLE IF NOT EXISTS calendar.comparte
 (
 dni_usuario VARCHAR(10),
-calendario NUMBER,
+calendario INTEGER,
 PRIMARY KEY (dni_usuario, calendario)
 );
 
@@ -26,10 +28,10 @@ CREATE TABLE IF NOT EXISTS calendar.usuarios
 (
 DNi_usuario  VARCHAR(10) PRIMARY KEY,
 nombre_completo VARCHAR(30) NOT NULL,
-email CITEXT UNIQUE,
+email VARCHAR(40) UNIQUE,
 contraseña VARCHAR(20) UNIQUE NOT NULL,
 direccion VARCHAR(50),
-poblacion VARCHAR(20)
+poblacion VARCHAR(20),
 portal VARCHAR(5),
 codigo_postal INTEGER,
 fecha_nacimiento DATE NOT NULL
@@ -39,15 +41,15 @@ CREATE TABLE IF NOT EXISTS calendar.eventos
 (
 evento SERIAL,
 fecha DATE,
-calendario NUMBER,
+calendario INTEGER UNIQUE,
 PRIMARY KEY (evento, fecha)
 );
 
 CREATE TABLE IF NOT EXISTS calendar.recordatorio
 (
-evento NUMBER,
+evento INTEGER,
 fecha DATE,
-calendario NUMBER,
+calendario INTEGER,
 titulo VARCHAR(30),
 descripcion VARCHAR(300),
 hora_alarma TIME,
@@ -56,9 +58,9 @@ PRIMARY KEY (evento, fecha)
 
 CREATE TABLE IF NOT EXISTS calendar.tareas
 (
-evento NUMBER,
+evento INTEGER,
 fecha DATE,
-calendario NUMBER,
+calendario INTEGER,
 titulo VARCHAR(30),
 descripcion VARCHAR(300),
 hora_inicio TIME,
@@ -67,38 +69,38 @@ PRIMARY KEY (evento, fecha)
 
 CREATE TABLE IF NOT EXISTS calendar.festivos
 (
-evento NUMBER,
+evento INTEGER,
 fecha DATE,
-calendario NUMBER,
-festividad VARCHAR(40)
-ambito VARCHAR(20)
+calendario INTEGER,
+festividad VARCHAR(40),
+ambito VARCHAR(20),
 PRIMARY KEY (evento, fecha)
 );
 
 CREATE TABLE IF NOT EXISTS calendar.cumpleaños
 (
-evento NUMBER,
+evento INTEGER,
 fecha DATE,
-calendario NUMBER,
-dni_usuario VARCHAR(30)
+calendario INTEGER,
+dni_usuario VARCHAR(30),
 PRIMARY KEY (evento, fecha)
 );
 
 CREATE TABLE IF NOT EXISTS calendar.eventogenerico
 (
-evento NUMBER,
+evento INTEGER,
 fecha DATE,
-calendario NUMBER,
-titulo VARCHAR(30)
-descripcion VARCHAR(300)
-localizacion VARCHAR(40)
+calendario INTEGER,
+titulo VARCHAR(30),
+descripcion VARCHAR(300),
+localizacion VARCHAR(40),
 PRIMARY KEY (evento, fecha)
 );
 
 CREATE TABLE IF NOT EXISTS calendar.seetiquetacon
 (
-etiqueta NUMBER,
-evento NUMBER,
+etiqueta INTEGER,
+evento INTEGER,
 fecha DATE,
 PRIMARY KEY (etiqueta, evento, fecha)
 );
@@ -107,8 +109,7 @@ CREATE TABLE IF NOT EXISTS calendar.etiqueta
 (
 etiqueta SERIAL PRIMARY KEY,
 titulo VARCHAR(30) NOT NULL,
-color CHAR(7) NOT NULL,
-PRIMARY KEY (etiqueta, evento, fecha)
+color CHAR(7) NOT NULL
 );
 
 ALTER TABLE calendar.comparte ADD CONSTRAINT clave_ajena1_comparte
