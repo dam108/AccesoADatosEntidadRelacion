@@ -1,5 +1,5 @@
 ~~~ sql
-CREATE DATABASE calendar OWNER = alumno ;
+CREATE DATABASE ejercicio_calendar OWNER = alumno ;
 
 CREATE SCHEMA calendar;
 
