@@ -192,4 +192,18 @@ ALTER TABLE calendar.seetiquetacon ADD CONSTRAINT clave_ajena2_seetiquetacon
 FOREIGN KEY (evento, fecha) REFERENCES calendar.eventogenerico (evento, fecha)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
+-- ALTER TABLE calendar.calendarios ALTER COLUMN fecha_creacion SET DEFAULT now();
+
+-- INSERT INTO calendar.usuarios
+-- VALUES
+-- ('79336700V', 'Jose Angel Doval Fraga',
+-- 'doval@jose.doval.com', '123', 'Roibeira 48',
+-- 'betanzos', null, 15300, '1985-12-07')
+-- ;
+
+-- INSERT INTO calendar.calendarios
+-- VALUES
+-- (DEFAULT, '79336700V', DEFAULT)
+-- ;
+
 ~~~ 
