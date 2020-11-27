@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS calendar.usuarios
 DNi_usuario  VARCHAR(10) PRIMARY KEY,
 nombre_completo VARCHAR(30) NOT NULL,
 email email UNIQUE NOT NULL,
-contraseña CHAR(64) UNIQUE NOT NULL,
+contraseña CHAR(64) NOT NULL,
 direccion VARCHAR(50) NOT NULL,
 poblacion VARCHAR(20)NOT NULL,
 portal VARCHAR(5),
@@ -197,27 +197,58 @@ ALTER TABLE calendar.seetiquetacon ADD CONSTRAINT clave_ajena2_seetiquetacon
 FOREIGN KEY (evento, fecha) REFERENCES calendar.eventogenerico (evento, fecha)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
--- INSERT INTO calendar.usuarios
--- VALUES
--- ('79336700V', 'Jose Angel Doval Fraga',
--- 'doval@jose.doval.com', '123', 'Roibeira 48',
--- 'betanzos', null, 15300, '1985-12-07')
--- ;
+-- 4 Usuarios 
 
--- INSERT INTO calendar.usuarios
--- VALUES
--- ('11111111A', 'Daniel Di Pascua',
--- 'daniel@DiPascua.com', 'abc123.', 'Calle de prueba 123',
--- 'sada', '1A', 15300, '1988-04-11')
--- ;
+INSERT INTO calendar.usuarios(
+	dni_usuario, nombre_completo, email, "contraseña",
+	direccion, poblacion, portal, codigo_postal, fecha_nacimiento)
+VALUES
+('79336700V', 'Jose Angel Doval Fraga',
+'doval@jose.doval.com', '123', 'Roibeira 48',
+'betanzos', null, 15300, '1985-12-07'),
+('11111111A', 'Daniel Di Pascua',
+'daniel@DiPascua.com', 'abc123.', 'Calle de prueba 123',
+'sada', '1A', 15300, '1988-04-11'),
+('22222222J', 'Miguel Rios Cortes',
+'miguel@rios.com', '123', 'calle venezuela n8',
+'A coruña', 'C', 16006, '1980-01-01'),
+('33333333H', 'Macos Rojo Azul',
+'marcos@rojo.com', '123', 'calle alfonso Molina nº 30',
+'A coruña', 'C', 16006, '1975-09-11')
+;
 
--- INSERT INTO calendar.calendarios
--- VALUES
--- (DEFAULT, '79336700V', DEFAULT)
--- ;
+-- Calendarios de cada Usuario (4 calendarios)
 
--- INSERT INTO calendar.guardarcontacto
--- VALUES
--- ('79336700V', '11111111A');
+INSERT INTO calendar.calendarios(
+	calendario, dni_usuario, fecha_creacion)
+VALUES
+(DEFAULT, '79336700V', DEFAULT),
+(DEFAULT, '11111111A', DEFAULT),
+(DEFAULT, '22222222J', DEFAULT),
+(DEFAULT, '33333333H', DEFAULT)
+;
+
+-- Contactos Usuario 1 tiene de contacto a usuario 3, Usuario 4 tiene de contacto a usuario 1 y 2
+
+INSERT INTO calendar.guardarcontacto(
+	dni_contacto, dni_usuario)
+VALUES
+('79336700V', '22222222J'),
+('33333333H', '79336700V'),
+('33333333H', '11111111A')
+;
+
+-- Usuario 1 comparte calendario con usuario 3, Usuario 4 comparte calendario con Usuario 1
+
+INSERT INTO calendar.comparte(
+	dni_usuario, calendario)
+VALUES
+('22222222J', '1'),
+('79336700V', '4')
+;
+
+-- Creamos los eventos del Usuario 1
+
+
 
 ~~~ 
